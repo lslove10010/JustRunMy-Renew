@@ -30,6 +30,9 @@ DYNAMIC_APP_NAME = "未知应用"
 # ============================================================
 #  企业微信机器人推送模块
 # ============================================================
+# ============================================================
+#  企业微信机器人推送模块
+# ============================================================
 def send_wechat_message(status_icon, status_text, time_left):
     if not WECHAT_KEY:
         print("ℹ️ 未配置 WECHAT_KEY，跳过企业微信推送。")
@@ -42,17 +45,17 @@ def send_wechat_message(status_icon, status_text, time_left):
     # 企业微信 Webhook 地址（固定前缀 + key 参数）
     url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key={WECHAT_KEY}"
     
-    # 构造 Markdown 格式的消息内容
+    # 构造 text 类型的消息内容（兼容微信客户端）
     content = (
-        f"**🖥 {DYNAMIC_APP_NAME}**\n"
-        f">{status_icon} **状态**: {status_text}\n"
-        f">⏱️ **剩余时间**: {time_left}\n"
-        f">🕐 **执行时间**: {current_time_str}"
+        f"🖥 应用: {DYNAMIC_APP_NAME}\n"
+        f"{status_icon} 状态: {status_text}\n"
+        f"⏱️ 剩余: {time_left}\n"
+        f"🕐 时间: {current_time_str}"
     )
     
     payload = {
-        "msgtype": "markdown",
-        "markdown": {
+        "msgtype": "text",
+        "text": {
             "content": content
         }
     }
